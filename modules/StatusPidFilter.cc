@@ -190,6 +190,7 @@ void StatusPidFilter::Process()
   Int_t status, pdgCode;
   Bool_t pass;
 
+
   fItInputArray->Reset();
   while((candidate = static_cast<Candidate *>(fItInputArray->Next())))
   {
@@ -216,6 +217,12 @@ void StatusPidFilter::Process()
 
     //Stable photons
     if(pdgCode == 22 && status == 1) pass = kTRUE;
+
+    // protons - JH
+    if(pdgCode == 2212 && status == 1) 
+      {
+	pass = kTRUE;
+      }
 
     // logic ported from HepPDF: http://lcgapp.cern.ch/project/simu/HepPDT/HepPDT.2.05.02/html/ParticleID_8cc-source.html#l00081
     bool is_b_hadron = hasBottom(pdgCode);
