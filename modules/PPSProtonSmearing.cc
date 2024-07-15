@@ -99,7 +99,7 @@ void PPSProtonSmearing::Finish()
 void PPSProtonSmearing::Process()
 {
   Candidate *candidate, *mother;
-  Double_t z, e, pz, t, pt, eta, phi, res, enew, znew, xi, xinew;
+  Double_t z, e, pz, px, py, t, pt, eta, phi, res, enew, znew, xi, xinew;
   Double_t ttrue, tnew;
 
   const Double_t c_light = 2.99792458E8;
@@ -112,6 +112,8 @@ void PPSProtonSmearing::Process()
     z = candidatePosition.Z();
     e = candidateMomentum.E();
     pz = candidateMomentum.Pz();
+    px = candidateMomentum.Pz();
+    py = candidateMomentum.Py();
     
     t = candidatePosition.T();
     pt = candidateMomentum.Pt();
@@ -143,7 +145,8 @@ void PPSProtonSmearing::Process()
 
     if(e > 3000 && (xinew>=fXiMin) && (xinew<=fXiMax))
       {
-	candidate->Momentum.SetPtEtaPhiE(pt, eta, phi, enew);
+	//	candidate->Momentum.SetPtEtaPhiE(pt, eta, phi, enew);
+	candidate->Momentum.SetPxPyPzE(px,py,pz,enew);
 	candidate->Position.SetT(tnew * 1.0E3 * c_light);	
 	//	candidate->Position.SetXYZT(0,0,z,tnew);
 	//	std::cout << "\ttnew = " << tnew << ", Candidate T = " << candidate->Position.T() << std::endl;
